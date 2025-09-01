@@ -1,0 +1,18 @@
+---
+import * as Plot from "@observablehq/plot";
+import { JSDOM } from "jsdom";
+import Pingouins from "../assets/data/untitled.json" assert { type: "json" };
+
+const { options } = Astro.props;
+const optionsPlot = {
+    marks:[
+        Plot.dot(Pingouins, {
+            x: "culmen_length_mm",
+            y: "culmen_depth_mm",
+            stroke: "species",
+        }),
+    ],
+};
+
+const plot = Plot.plot({ ...options, document: new JSDOM("").window.document });
+---
