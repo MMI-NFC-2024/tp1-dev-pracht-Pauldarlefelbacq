@@ -1,0 +1,31 @@
+---
+import * as Plot from "@observablehq/plot";
+import { JSDOM } from "jsdom";
+import Weather from "../assets/data/weather.json" assert { type: "json" };
+
+const { options } = Astro.props;
+const weatherWithDates = Weather.map(d => ({
+    ...d,
+    date: new Date(d.date)
+}));
+
+const optionsPlot = {
+    style: "overflow: visible;",
+    x: {
+        type: "utc",
+        label: "Date"
+    },
+    y: {
+        grid: true,
+        label: "Température maximale (°C)"
+    },
+    marks: [
+        Plot.ruleY([0]),
+        Plot.lineY(weatherWithDates, {x: "date", y: "temp_max", stroke: "location"}),
+        Plot.text(weatherWithDates, Plot.selectLast({x: "date", y: "temp_max", z: "location", text: "location", textAnchor: "start", dx: 3}))
+    ],
+};
+
+---
+
+<div set:html={Plot.plot({ ...optionsPlot, document: new JSDOM("").window.document }).outerHTML} />

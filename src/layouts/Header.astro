@@ -1,0 +1,131 @@
+---
+const { pathname } = Astro.url;
+---
+
+<header class="header">
+    <nav class="nav">
+        <div class="nav-brand">
+            <a href="/" class="brand-link">TP1 Dev Pracht</a>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="/" class={pathname === "/" ? "nav-link active" : "nav-link"}>
+                    Accueil
+                </a>
+            </li>
+            <li>
+                <a href="/weather/" class={pathname === "/weather/" ? "nav-link active" : "nav-link"}>
+                    Météo
+                </a>
+            </li>
+            <li>
+                <a href="/pingouins/" class={pathname === "/pingouins/" ? "nav-link active" : "nav-link"}>
+                    Pingouins
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<style>
+    .header {
+        background-color: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
+
+    .nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 4rem;
+    }
+
+    .nav-brand .brand-link {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #1f2937;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .nav-brand .brand-link:hover {
+        color: #3b82f6;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        gap: 2rem;
+    }
+
+    .nav-link {
+        color: #6b7280;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        transition: all 0.2s ease;
+        position: relative;
+    }
+
+    .nav-link:hover {
+        color: #3b82f6;
+        background-color: #f3f4f6;
+    }
+
+    .nav-link.active {
+        color: #3b82f6;
+        background-color: #eff6ff;
+        font-weight: 600;
+    }
+
+    .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #3b82f6;
+        border-radius: 1px 1px 0 0;
+    }
+
+    @media (max-width: 768px) {
+        .nav {
+            flex-direction: column;
+            height: auto;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .nav-links {
+            gap: 1rem;
+        }
+
+        .nav-link {
+            padding: 0.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .nav-links {
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+        }
+
+        .nav-link {
+            display: block;
+            width: 100%;
+        }
+    }
+</style>
