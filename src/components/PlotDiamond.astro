@@ -1,0 +1,28 @@
+---
+import * as Plot from "@observablehq/plot";
+import { JSDOM } from "jsdom";
+import Diamond from "../assets/data/diamond.json" assert { type: "json" };
+
+const { options } = Astro.props;
+
+const optionsPlot = {
+    y: {
+        grid: true,
+        label: "Nombre de carats"
+    },
+    x: {
+        label: "Qualité du diamant"
+    },
+    marks: [
+        Plot.ruleY([0]),
+        Plot.dot(Diamond, {
+            x: "cut", 
+            y: "carat", 
+            stroke: "price",
+            sort: {x: "y", reverse: true}
+        })
+    ],
+};
+---
+
+<div set:html={Plot.plot({ ...optionsPlot, document: new JSDOM("").window.document }).outerHTML} />
